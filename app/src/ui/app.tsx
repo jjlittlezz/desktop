@@ -135,6 +135,7 @@ import classNames from 'classnames'
 import { dragAndDropManager } from '../lib/drag-and-drop-manager'
 import { MoveToApplicationsFolder } from './move-to-applications-folder'
 import { ChangeRepositoryAlias } from './change-repository-alias/change-repository-alias-dialog'
+import { StashBeforeUndo } from './undo/stash-before-undo'
 
 const MinuteInMilliseconds = 1000 * 60
 const HourInMilliseconds = MinuteInMilliseconds * 60
@@ -2054,6 +2055,19 @@ export class App extends React.Component<IAppProps, IAppState> {
           <ChangeRepositoryAlias
             dispatcher={this.props.dispatcher}
             repository={popup.repository}
+            onDismissed={onPopupDismissedFn}
+          />
+        )
+      }
+      case PopupType.ConfirmStashBeforeUndo: {
+        const { repository, commit, overwrite } = popup
+        return (
+          <StashBeforeUndo
+            key="stash-before-undo"
+            dispatcher={this.props.dispatcher}
+            repository={repository}
+            commit={commit}
+            overwrite={overwrite}
             onDismissed={onPopupDismissedFn}
           />
         )

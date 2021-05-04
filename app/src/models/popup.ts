@@ -10,7 +10,7 @@ import { IRemote } from './remote'
 import { RetryAction } from './retry-actions'
 import { WorkingDirectoryFileChange } from './status'
 import { PreferencesTab } from './preferences'
-import { CommitOneLine, ICommitContext } from './commit'
+import { Commit, CommitOneLine, ICommitContext } from './commit'
 import { IStashEntry } from './stash-entry'
 import { Account } from '../models/account'
 import { Progress } from './progress'
@@ -70,6 +70,7 @@ export enum PopupType {
   CherryPick,
   MoveToApplicationsFolder,
   ChangeRepositoryAlias,
+  ConfirmStashBeforeUndo,
 }
 
 export type Popup =
@@ -278,3 +279,9 @@ export type Popup =
     }
   | { type: PopupType.MoveToApplicationsFolder }
   | { type: PopupType.ChangeRepositoryAlias; repository: Repository }
+  | {
+      type: PopupType.ConfirmStashBeforeUndo
+      repository: Repository
+      commit: Commit
+      overwrite: boolean
+    }
